@@ -1,0 +1,23 @@
+{
+  "name": "debug-extra",
+  "version": "1.0.0",
+  "description": "NodeJS Module using npm debug but Adds. debug.return() and debug.pipe() returns the values that get debuged Used for FRP and Stream Coding",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/direktspeed/debug-extra.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/direktspeed/debug-extra/issues"
+  },
+  "homepage": "https://github.com/direktspeed/debug-extra#readme",
+  "dependencies": {
+    "debug": "^2.6.1",
+    "through2": "^2.0.3"
+  }
+}
