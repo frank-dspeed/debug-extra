@@ -38,3 +38,4 @@ debugX.pipe = function (name) {
     })
   }
 }
+module.exports=debugX;
