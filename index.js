@@ -1,41 +1,41 @@
-let debug = require('debug');
-var through = require('through2')
-let debugX= debug;
-debugX.stream= (a) => {
-    let d = typeof name === 'function' ? name : debug(name)
-    let args = arguments.length &&Array.prototype.slice.call(arguments, 1);
-    if (args) {
-	d.apply(d, args.concat(args));
-   } else {
-        d(args);
-   }
-    return args;
-  }
-
-debugX.pipe = function (name) {
-  var d = typeof name === 'function' ? name : debug(name)
+import debug from 'debug'; // NPM
+import { Transform } from 'stream'; // NodeJS >Core or NPM readable-stream
+/**
+ * 
+ * @param {string | function} name as String or debug instance
+ * @returns 
+ */
+export const debugPipe = (name) => {
+    
+  let enabled = false;
+  
   try {
-    var enabled = !!(process.env.DEBUG || localStorage.debug)
-  } catch (e) {}
-  passThrough.enabled = false
-  debugStream.enabled = true
-  return enabled ? debugStream : passThrough
-  function passThrough () {
-    return through.obj()
+    enabled = !!(process.env.DEBUG || localStorage.debug)
+  } catch (e) {
+    return 
   }
-  function debugStream () {
-    var args = arguments.length && Array.prototype.slice.call(arguments)
-    var run = args ?
-      function (line) {
-        d.apply(d, args.concat(line))
-      } :
-      function (line) {
-        d(line)
-      }
-    return through.obj(function (data, enc, cb) {
-      run(data)
-      cb(null, data)
-    })
+  /**
+   * @returns {Transform}
+   */
+  return (...args) => {
+    //var args = arguments.length && Array.prototype.slice.call(arguments)
+    const d = typeof name === 'function' ? name : debug(name) ;
+    const run = args 
+      ? (line='') => d(args.concat(line))
+      : d;
+    
+    if (enabled) {
+      return new Transform({
+        transform(chunk, enc, callback) {
+          run(chunk)
+          callback(null, chunk)
+        }
+      });    
+    }
+    // passThrough
+    return new Transform({ transform(chunk, enc, callback) { callback(null, chunk); } });
   }
+  
 }
-module.exports=debugX;
+
+export default debug;
