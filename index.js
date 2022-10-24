@@ -1,5 +1,5 @@
 import debug from 'debug'; // NPM
-import { Transform } from 'stream'; // NodeJS >Core or NPM readable-stream
+import { Transform } from 'node:stream'; // or NPM readable-stream
 /**
  * 
  * @param {string | function} name as String or debug instance
